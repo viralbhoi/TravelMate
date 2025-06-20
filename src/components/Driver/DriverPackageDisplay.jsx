@@ -1,6 +1,6 @@
 import React from "react";
 import { useAppContext } from "../../context/AppContext";
-import DriverNav from "../Driver/DriverNav";
+import DriverNav from "./DriverNav";
 
 export default function DriverPackageDisplay() {
     const { loggedInUser, packages } = useAppContext();
