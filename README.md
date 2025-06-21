@@ -88,12 +88,6 @@ The app will start on http://localhost:5173
 - Component-based architecture and modular design
 - Git-based collaboration in a team environment
 
-✍️ Author
-----------
-Viral Bhoi
-Frontend Developer | React Enthusiast
-GitHub: https://github.com/viralbhoi
-LinkedIn: https://linkedin.com/in/YOUR_PROFILE
 
 📜 License
 -----------
