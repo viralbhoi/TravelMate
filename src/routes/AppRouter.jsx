@@ -17,6 +17,7 @@ import DriverDashboard from "../components/Driver/DriverDashboard.jsx";
 import DriverTrip from "../components/Driver/DriverTrip.jsx";
 import DriverPackageDisplay from "../components/Driver/DriverPackageDisplay.jsx"
 import DriverAlltrip from "../components/Driver/DriverAlltrip.jsx"
+import Schedule from "../components/Driver/Schedule.jsx";
 
 
 export default function AppRouter() {
@@ -39,6 +40,7 @@ export default function AppRouter() {
                     )
                 }
             />
+            
 
             <Route
                 path="/user/booktrip"
@@ -108,6 +110,16 @@ export default function AppRouter() {
                 }
             />
             {/* Driver routes */}
+            <Route
+                path="/driver/schedule"
+                element={
+                    loggedInUser?.role === "driver" ? (
+                        <Schedule/>
+                    ) : (
+                        <Navigate to="/login" />
+                    )
+                }
+            />
             <Route
                 path="/driver/dashboard"
                 element={

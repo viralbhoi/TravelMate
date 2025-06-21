@@ -10,6 +10,7 @@ export default function UserTripData() {
         (trip) => trip.userEmail === loggedInUser.email
     );
 
+
     const [filters, setFilters] = useState([]);
     const options = ["rejected", "assigned", "approved", "pending"];
 
@@ -71,7 +72,6 @@ export default function UserTripData() {
                                 <p>id:</p>
                                 <p>{trip.id}</p>
                             </div>
-
                             <div className="flex flex-col flex-3/12 justify-center">
                                 <p>
                                     {trip.pickup} &rarr; {trip.destination}
