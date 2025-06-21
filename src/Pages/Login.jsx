@@ -273,7 +273,7 @@ export default function AdminLogin() {
                                         <p className="mb-1">Vehicle: Van</p>
                                         <hr />
                                         <p className="mt-1">
-                                            Email: A@example.com{" "}
+                                            Email: C@example.com{" "}
                                         </p>
                                         <p>Password : Ccc@789</p>
                                         <p className="mb-1">Vehicle: bus</p>
