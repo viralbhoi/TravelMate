@@ -76,9 +76,9 @@ The app will start on http://localhost:5173
 ---------------------
 | Role   | Email              | Password |
 |--------|--------------------|----------|
-| User   | user1@gmail.com    | 123      |
-| Admin  | admin1@gmail.com   | 123      |
-| Driver | driver1@gmail.com  | 123      |
+| User   | Alice@example.com    | Alice@123      |
+| Admin  | admin@example.com   | admin@123      |
+| Driver | A@example.com  | Aaa@123      |
 
 🎯 Key Learning Outcomes
 -------------------------
