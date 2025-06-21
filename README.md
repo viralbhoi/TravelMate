@@ -41,20 +41,20 @@ TravelMate supports three distinct user roles — User, Driver, and Admin — ea
 📁 Project Structure
 ---------------------
 
-TravelMate/
-├── components/        # All reusable UI components organized by role
-│   ├── User/          # User-specific components (trip booking, dashboard)
-│   ├── Admin/         # Admin dashboard, trip approval, package management
-│   ├── Driver/        # Driver dashboard and trip management
-│   └── General/       # Shared components (navbar, footer, etc.)
-├── context/           # AppContext for global state management
-├── data/              # Dummy data for users, drivers, trips, etc.
-├── routes/            # Protected routing logic (AppRouter)
-├── utils/             # Utility functions (e.g., localStorage handlers)
-├── pages/             # Page-level components (Login, Landing, etc.)
-├── App.jsx            # Root component where routes and layout mount
-├── main.jsx           # Entry point: ReactDOM render & context provider
-└── index.css          # Global styles and Tailwind CSS config
+TravelMate/ <br>
+├── components/        <br>
+│   ├── User/          <br>
+│   ├── Admin/         <br>
+│   ├── Driver/        <br>
+│   └── General/       <br>
+├── context/           <br>
+├── data/              <br>
+├── routes/            <br>
+├── utils/             <br>
+├── pages/             <br>
+├── App.jsx            <br>
+├── main.jsx           <br>
+└── index.css          <br>
 
 
 
