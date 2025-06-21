@@ -6,9 +6,10 @@ export default function UserDashboard() {
   return (
     <div className='flex'>
       <UserNav/>
-      <UserTripData/>
+      <div className='flex flex-col md:ml-[20%] flex-1 mt-[20%] md:mt-0'>
+        <UserTripData/>
+      </div>
     </div>
   )
-  
 }
 
