@@ -1,12 +1,104 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+🚀 TravelMate
+=============
 
-Currently, two official plugins are available:
+A role-based travel booking platform built with React.js, Tailwind CSS, and Context API.
+TravelMate supports three distinct user roles — User, Driver, and Admin — each with tailored dashboards and actions to simulate a real-world trip management system.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+✅ Internship Project | 👨‍💻 Tech Elecon Pvt. Ltd. 
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+🧰 Tech Stack
+--------------
+- Frontend: React.js, Tailwind CSS, Vite
+- State Management: React Context API
+- Routing: React Router DOM
+- Icons: FontAwesome
+- Data Persistence: localStorage
+- Version Control: Git & GitHub
+
+📦 Features by Role
+--------------------
+
+👤 User:
+- Login with dummy credentials
+- Book trips by selecting cities, dates, and vehicle
+- View and filter personal trips (approved, pending, rejected)
+- Book from curated travel packages with available seat tracking
+
+👨‍💼 Admin:
+- Confirm/reject pending trips
+- Assign drivers to approved trips
+- Manage and update default travel packages
+- Monitor all system trips
+
+🚗 Driver:
+- View assigned trips
+- Accept or reject trips
+- Track trip history and earnings (basic stats)
+
+📁 Project Structure
+---------------------
+TravelMate/
+├── components/
+│   ├── User/
+│   ├── Admin/
+│   ├── Driver/
+│   └── General/
+├── context/
+├── data/
+├── routes/
+├── utils/
+├── pages/
+├── App.jsx
+├── main.jsx
+└── index.css
+
+⚙️ Getting Started
+-------------------
+1. Clone the Repository
+   git clone https://github.com/viralbhoi/TravelMate.git
+   cd TravelMate
+
+2. Install Dependencies
+   npm install
+
+3. Run the App
+   npm run dev
+
+The app will start on http://localhost:5173
+
+🧪 Dummy Credentials
+---------------------
+| Role   | Email              | Password |
+|--------|--------------------|----------|
+| User   | user1@gmail.com    | 123      |
+| Admin  | admin1@gmail.com   | 123      |
+| Driver | driver1@gmail.com  | 123      |
+
+🎯 Key Learning Outcomes
+-------------------------
+- Role-based routing and protected UI rendering
+- Persistent global state with Context API + localStorage
+- Dynamic trip cost calculation
+- Component-based architecture and modular design
+- Git-based collaboration in a team environment
+
+✍️ Author
+----------
+Viral Bhoi
+Frontend Developer | React Enthusiast
+GitHub: https://github.com/viralbhoi
+LinkedIn: https://linkedin.com/in/YOUR_PROFILE
+
+📜 License
+-----------
+This project is part of a student internship under Tech Elecon Pvt. Ltd.
+For educational and demo purposes only.
+
+🙌 Acknowledgments
+--------------------
+- Tech Elecon Pvt. Ltd. for providing the internship opportunity
+- Mr. Satyam Raval for guidance and mentorship
+- The incredible TravelMate team for collaboration
