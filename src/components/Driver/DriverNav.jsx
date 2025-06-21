@@ -10,7 +10,7 @@ export default function DriverNav() {
     return (
         <>
             {!mobileMenu && (
-                <div className="flex  fixed md:hidden h-[10%] bg-slate-50 shadow-2xl p-5 w-full justify-between items-center">
+                <div className="flex fixed md:hidden h-[10%] z-10 bg-slate-50 shadow-2xl p-5 w-full justify-between items-center">
                     <button
                         className="rounded-xl shadow-md p-4"
                         onClick={() => setMobileMenu(true)}
@@ -22,7 +22,7 @@ export default function DriverNav() {
             )}
 
             {mobileMenu && (
-                <div className="fixed md:hidden h-screen bg-slate-950 text-white  p-5 w-full justify-between items-center transition-all duration-300 ease-in-out flex flex-col">
+                <div className="fixed md:hidden h-screen bg-slate-950 text-white  p-5 w-full justify-between items-center transition-all duration-300 ease-in-out flex flex-col z-10">
                     <div className="flex justify-between p-4 items-center w-full">
                         <h2 className="text-xl font-semibold">Driver Panel</h2>
                         <button
@@ -91,6 +91,20 @@ export default function DriverNav() {
                             style={{ textDecoration: "none", color: "#F8FAFC" }}
                         >
                             Packages
+                        </NavLink>
+
+                        <NavLink
+                            to="/driver/schedule"
+                            className={({ isActive }) =>
+                                `py-4 w-full px-3 transition-all duration-200 ease-linear ${
+                                    isActive
+                                        ? "bg-slate-900 text-slate-50 font-semibold"
+                                        : "hover:bg-slate-900"
+                                }`
+                            }
+                            style={{ textDecoration: "none", color: "#F8FAFC" }}
+                        >
+                            Schedule
                         </NavLink>
 
                     </nav>
@@ -165,6 +179,20 @@ export default function DriverNav() {
                         >
                             Packages
                         </NavLink>
+                        
+                        <NavLink
+                            to="/driver/schedule"
+                            className={({ isActive }) =>
+                                `py-4 w-full px-3 transition-all duration-200 ease-linear ${
+                                    isActive
+                                        ? "bg-slate-900 text-slate-50 font-semibold"
+                                        : "hover:bg-slate-900"
+                                }`
+                            }
+                            style={{ textDecoration: "none", color: "#F8FAFC" }}
+                        >
+                            Schedule
+                            </NavLink>
 
                 </nav>
                         <button

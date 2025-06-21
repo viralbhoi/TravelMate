@@ -216,6 +216,7 @@ export default function AdminLogin() {
                                         name="password"
                                         id="password"
                                         placeholder="Enter password"
+                                        autoComplete="current-password"
                                         value={password}
                                         onChange={(e) =>
                                             setPassword(e.target.value)
