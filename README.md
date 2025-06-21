@@ -40,20 +40,21 @@ TravelMate supports three distinct user roles — User, Driver, and Admin — ea
 
 📁 Project Structure
 ---------------------
-TravelMate/
-├── components/
-│   ├── User/
-│   ├── Admin/
-│   ├── Driver/
-│   └── General/
-├── context/
-├── data/
-├── routes/
-├── utils/
-├── pages/
-├── App.jsx
-├── main.jsx
-└── index.css
+TravelMate/ <br>
+├── components/ <br>
+│   ├── User/ <br>
+│   ├── Admin/ <br>
+│   ├── Driver/ <br>
+│   └── General/ <br>
+├── context/ <br>
+├── data/ <br>
+├── routes/ <br>
+├── utils/ <br>
+├── pages/ <br>
+├── App.jsx <br>
+├── main.jsx <br>
+└── index.css <br>
+
 
 ⚙️ Getting Started
 -------------------
