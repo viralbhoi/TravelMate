@@ -88,7 +88,7 @@ export default function UserPackage() {
                                                     (driver) =>
                                                         packge.driverEmail ===
                                                         driver.email
-                                                ).username
+                                                )?.username
                                             }
                                         </p>
                                     </div>
