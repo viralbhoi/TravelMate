@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import AdminNav from "./AdminNav";
 import { useAppContext } from "../../context/AppContext";
 import Card from "../General/Card";
+import AdminRouter from "../../routes/AdminRouter";
 
 export default function AdminDashboard() {
     const { trips, users, drivers } = useAppContext();
@@ -48,6 +49,7 @@ export default function AdminDashboard() {
     }, [trips, users, drivers]);
 
     return (
+        <>
         <div className="flex flex-wrap">
             <AdminNav />
 
@@ -99,7 +101,7 @@ export default function AdminDashboard() {
                 />
             </div>
 
-            {/* <TripDataTable/> */}
         </div>
+        </>
     );
 }
