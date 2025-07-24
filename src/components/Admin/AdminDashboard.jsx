@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import AdminNav from "./AdminNav";
 import { useAppContext } from "../../context/AppContext";
 import Card from "../General/Card";
 import AdminRouter from "../../routes/AdminRouter";
@@ -51,7 +50,7 @@ export default function AdminDashboard() {
     return (
         <>
         <div className="flex flex-wrap">
-            <AdminNav />
+           
 
             <div className="mt-[20%] md:mt-0 md:ml-[20%] w-full h-screen grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-2">
                 <Card

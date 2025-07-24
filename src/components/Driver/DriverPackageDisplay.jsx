@@ -1,12 +1,12 @@
 import React from "react";
 import { useAppContext } from "../../context/AppContext";
-import DriverNav from "../Driver/DriverNav";
+
 
 export default function DriverPackageDisplay() {
     const { loggedInUser, packages } = useAppContext();
     return (
         <div className="flex flex-col md:flex-row">
-            <DriverNav />
+           
             <div className="flex-1 mt-[20%] md:mt-0 md:ml-[20%] flex flex-col p-3">
                 <h2 className="bg-slate-800 text-2xl text-slate-50 text-center font-semibold p-4 rounded-2xl">
                     All Package

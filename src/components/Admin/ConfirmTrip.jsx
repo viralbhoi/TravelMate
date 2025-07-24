@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import AdminNav from "./AdminNav";
 import { useAppContext } from "../../context/AppContext";
 import { useNavigate } from "react-router-dom";
 
@@ -78,7 +77,7 @@ export default function ConfirmTrip() {
 
     return (
         <div className="flex ">
-            <AdminNav />
+            
             <div className="p-4 mt-[20%] md:mt-0 md:ml-[20%] w-full">
                 <h2 className="bg-slate-800 text-2xl text-slate-50 text-center font-semibold p-4 rounded-2xl">
                     Confirm Pending Requests

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import UserNav from "./UserNav";
+
 import { useAppContext } from "../../context/AppContext";
 import { useNavigate } from "react-router-dom";
 
@@ -63,8 +63,7 @@ export default function UserTripBooking() {
 
     return (
         <div className="mx-0 flex gap-0 h-screen">
-            <UserNav />
-
+            
             <div className="md:ml-[20%] mt-[20%] md:mt-0 w-full ">
                 <form onSubmit={handleOnSubmit}>
                     <div className="flex flex-col justify-center items-center p-2">

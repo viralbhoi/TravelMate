@@ -5,9 +5,9 @@ import { getFromLS, saveToLS } from "../utils/localStorageUtils";
 const loginContext = createContext();
 
 export const LoginContextProvider = ({ children }) => {
-    const [loginStatus, setLoginStatus] = useState(getFromLS("loginStatus") || false);
+    const [loginStatus, setLoginStatus] = useState(getFromLS("loginStatus") || true);
     const [token, setToken] = useState(getFromLS("token") || null);
-    
+    const [userRole, setUserRole] = useState(getFromLS("userRole") || "admin");
 
     useEffect(() => {
         saveToLS("loginStatus", loginStatus);
@@ -40,6 +40,7 @@ export const LoginContextProvider = ({ children }) => {
                 // setToken, for security purposes let it be here only 
                 login,
                 logout
+                , userRole, setUserRole
             }}
         >
             {children}

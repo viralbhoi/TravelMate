@@ -1,7 +1,7 @@
 import React from 'react'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
-import DriverNav from './DriverNav'
+
 import { useAppContext } from '../../context/AppContext'
 
 export default function Schedule() {
@@ -16,7 +16,7 @@ export default function Schedule() {
 
     return (
         <div className='z-0 flex flex-row md:flex-col h-screen'>
-            <DriverNav />
+           
             <div className='flex-1 max-h-full md:mt-0 md:ml-[20%] flex flex-col p-3'>
                 <FullCalendar
                     plugins={[dayGridPlugin]}

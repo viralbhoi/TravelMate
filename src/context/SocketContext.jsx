@@ -3,7 +3,7 @@ import { io } from "socket.io-client";
 
 const SocketContext = createContext();
 
-export const SocketProvider = ({ children }) => {
+export const SocketContextProvider = ({ children }) => {
     const socket = useRef(null);
 
     const connectSocket = (token) => {

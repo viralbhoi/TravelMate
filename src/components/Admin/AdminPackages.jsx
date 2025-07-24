@@ -1,6 +1,5 @@
 // import { useState } from 'react'
 import React, { useState } from "react";
-import AdminNav from "./AdminNav";
 import { useAppContext } from "../../context/AppContext";
 
 export default function AdminPackages() {
@@ -66,7 +65,7 @@ export default function AdminPackages() {
 
     return (
         <div className="flex">
-            <AdminNav />
+            
 
             <div className="flex-1 mt-[20%] md:mt-0 md:ml-[20%] flex flex-col p-3">
                 <div>

@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 
 const TripContext = createContext();
 
-export const TripProvider = ({ children }) => {
+export const TripContextProvider = ({ children }) => {
     const [currentTrip, setCurrentTrip] = useState(null);
     const [tripStatus, setTripStatus] = useState(null);
     const [location, setLocation] = useState(null);

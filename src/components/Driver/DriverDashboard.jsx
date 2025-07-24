@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import VehicleInfor from "./VehicleInfor";
 import TripInfo from "./TripInfo";
 import Card from "../General/Card";
-import DriverNav from "./DriverNav";
+
 
 export default function DriverDashboard() {
     const { loggedInUser, setLoggedInUser, trips, drivers, users } =
@@ -59,7 +59,7 @@ export default function DriverDashboard() {
 
     return (
         <div className="flex flex-col md:flex-row">
-            <DriverNav />
+           
             <div className="flex flex-col gap-2 md:ml-[20%] h-screen md:mt-0 mt-[20%] flex-1 p-5">
                 <VehicleInfor
                     vehicleDetail={currentDriver?.vehicleType || "Not Assigned"}

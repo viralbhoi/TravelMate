@@ -1,54 +1,42 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { useAppContext } from "../context/AppContext.jsx";
-
+import { useLoginContext } from "../context/LoginContext.jsx";
 import Home from "../pages/Home.jsx";
 import Login from "../pages/Login.jsx"
 
-import UserDashboard from "../components/User/UserDashboard.jsx";
+import UserHomePage from "../components/User/UserHomePage.jsx";
 
-import AdminDashboard from "../components/Admin/AdminDashboard.jsx";
+import AdminHomePage from "../components/Admin/AdminHomePage.jsx";
 
-import DriverDashboard from "../components/Driver/DriverDashboard.jsx";
+import DriverHomePage from "../components/Driver/DriverHomePage.jsx";
 
 
 export default function AppRouter() {
-    const {loggedInUser} = useAppContext();
+    const { loginStatus,userRole } = useLoginContext();
 
+    const roles = [{ name: "user", component: <UserHomePage /> },
+                    { name: "admin", component: <AdminHomePage /> },
+                    { name: "driver", component: <DriverHomePage /> }];
+    
     return (
         <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
 
-            <Route
-                path="/user/*"
-                element={
-                    loggedInUser?.role === "user" ? (
-                        <UserDashboard />
-                    ) : (
-                        <Navigate to="/login" />
-                    )
-                }
-            />
-            <Route
-                path="/admin/*"
-                element={
-                    loggedInUser?.role === "admin" ? (
-                        <AdminDashboard />
-                    ) : (
-                        <Navigate to="/login" />
-                    )
-                }
-            />
-            <Route
-                path="/driver/*"
-                element={
-                    loggedInUser?.role === "driver" ? (
-                        <DriverDashboard />
-                    ) : (
-                        <Navigate to="/login" />
-                    )
-                }
-            />            
+
+            {roles?.map((role) => (
+                <Route
+                    path={`/${role.name}/*`}
+                    element={
+                        loginStatus && (userRole === role.name ? (
+                            role.component
+                        ) : (
+                            <Navigate to="/login" />
+                        ))
+                    }
+                />
+            ))}
+
+
         </Routes>
     );
 }

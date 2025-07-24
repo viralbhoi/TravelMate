@@ -1,11 +1,11 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { getFromLS, saveToLS } from "../utils/localStorageUtils";
-import { updateProfile } from "../../../backend/controllers/user.controller";
+// import { updateProfile } from "../../../backend/controllers/user.controller";
 
 const userContext = createContext();
 
 
-export const userContextProvider = ({ children }) => {
+export const UserContextProvider = ({ children }) => {
     const [userProfile, setUserProfile] = useState(getFromLS("userProfile") || null);
 
  

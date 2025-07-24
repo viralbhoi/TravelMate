@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import UserNav from "./UserNav";
+
 import { useAppContext } from "../../context/AppContext";
 
 export default function UserPackage() {
@@ -34,7 +34,7 @@ export default function UserPackage() {
 
     return (
         <div className="flex">
-            <UserNav />
+            
             <div className="flex-1 mt-[20%] md:mt-0 md:ml-[20%] flex flex-col p-3">
                 <h2 className="bg-slate-800 text-2xl text-slate-50 text-center font-semibold p-4 rounded-2xl">
                     Available Packages
