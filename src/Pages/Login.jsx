@@ -5,11 +5,20 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useNotification } from "../context/NotificationContext";
 import * as Yup from "yup";
 
+import { useLoginContext } from "../context/LoginContext";
+import { useUserContext } from "../context/UserContext";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000/api";
+
 export default function AdminLogin() {
+    // cotxt requ.
     const { notifySuccess, notifyError } = useNotification();
-    const [mode, setMode] = useState("login"); // login or signup
+    const {login,setUserRole} =useLoginContext();
+    const {setUserProfile} = useUserContext();
+
+    const [mode, setMode] = useState("login");
     const [role, setRole] = useState("user");
-    const { admins, users, drivers, setUsers, setDrivers, setLoggedInUser } = useAppContext();
+    const [step, setStep] = useState(1); 
+
     const navigate = useNavigate();
 
     const loginSchema = Yup.object({
@@ -17,88 +26,113 @@ export default function AdminLogin() {
         password: Yup.string().required("Required"),
     });
 
-    const signupSchema = Yup.object({
-        username: Yup.string().required("Required"),
+    const signupSchemaStep1 = Yup.object({
+        name: Yup.string().required("Required"),
         email: Yup.string().email("Invalid email").required("Required"),
         password: Yup.string().min(6, "Minimum 6 characters").required("Required"),
-        vehicle: Yup.string().when("role", {
-            is: "driver",
-            then: Yup.string().required("Vehicle type required"),
-        }),
+        phone: Yup.string().required("Required"),
+        gender: Yup.string().required("Required"),
+        area: Yup.string().required("Required"),
     });
 
-    const handleLogin = (values) => {
+    const vehicleSchema = Yup.object({
+        vehicle: Yup.object().shape({
+            model: Yup.string().required("Required"),
+            licenseNumber: Yup.string().required("Required"),
+            color: Yup.string().required("Required"),
+        }),
+    });
+    
+    const handleLogin = async (values) => {
         const { email, password } = values;
 
-        let tempUser =
-            role === "admin"
-                ? admins.find((u) => u.email === email)
-                : role === "user"
-                    ? users.find((u) => u.email === email)
-                    : drivers.find((u) => u.email === email);
+        try {
+            const res = await fetch(`${BASE_URL}/api/${role}/login`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email, password }),
+            });
 
-        if (!tempUser) return notifyError("User not found!");
-        if (tempUser.password !== password) return notifyError("Incorrect password");
+            const data = await res.json();
 
-        setLoggedInUser({ email, role, password });
-        navigate(`/${role}/dashboard`);
+            if (!res.ok) {
+                return notifyError(data.message || "Login failed");
+            }
+
+            
+            login(data?.token);
+            setUserProfile(data?.user);
+            setUserRole(role);
+
+
+            notifySuccess("Login successful!");
+            navigate(`/${role}/dashboard`);
+
+        } catch (err) {
+            notifyError("Something went wrong. Please try again.");
+            console.error(err);
+        }
     };
 
-    const handleSignup = (values) => {
-        const { username, email, password, vehicle } = values;
+    const handleSignup = async (values) => {
+        try {
+            console.log(values)
+            const res = await fetch(`${BASE_URL}/api/${role}/register`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    
+                },
+                body: JSON.stringify(values),
+            });
 
-        if (role === "user" && users.some((u) => u.email === email)) {
-            return notifyError("User email already exists");
+            const data = await res.json();
+
+            if (!res.ok) {
+                return notifyError(data.message || "Signup failed");
+            }
+
+            notifySuccess("Signup successful! Redirecting to login...");
+            setMode("login");
+            setStep(1);
+        } catch (err) {
+            notifyError("Something went wrong during signup.");
+            console.error(err);
         }
-
-        if (role === "driver" && drivers.some((u) => u.email === email)) {
-            return notifyError("Driver email already exists");
-        }
-
-        const newUser = {
-            id:
-                role === "user"
-                    ? users.length + 1
-                    : drivers.length + 1,
-            username,
-            email,
-            password,
-            ...(role === "driver" && { vehicleType: vehicle }),
-        };
-
-        if (role === "user") setUsers((prev) => [...prev, newUser]);
-        else setDrivers((prev) => [...prev, newUser]);
-
-        notifySuccess("Signup successful! Redirecting to login...");
-        setMode("login");
     };
-
 
     return (
-        <div className="flex h-screen bg-gradient-to-br from-blue-50 to-blue-200">
-
-            <div className="hidden md:flex w-1/2 bg-cover bg-center" style={{ mixBlendMode: "multiply", backgroundImage: "url('../../public/Login.jpg')" }}>
-            </div>
+        <div className="flex h-screen bg-gradient-to-br from-blue-50 to-blue-200 ">
+            <div
+                className="hidden md:flex w-1/2 bg-cover bg-center"
+                style={{ mixBlendMode: "multiply", backgroundImage: "url('../../public/Login.jpg')" }}
+            ></div>
 
             <div className="w-full md:w-1/2 flex flex-col justify-center items-center px-4 sm:px-10">
                 <button
                     className="absolute top-4 left-4 px-4 py-2 bg-black/70 text-white rounded-full hover:bg-black/90"
-                    onClick={() => { navigate("/"); }}
+                    onClick={() => {
+                        navigate("/");
+                    }}
                 >
                     ← Back
                 </button>
 
                 <div className="mb-6 text-center">
-                    <h1 className="text-3xl font-bold text-blue-700">TravelMate Portal </h1>
+                    <h1 className="text-3xl font-bold text-blue-700">TravelMate Portal</h1>
                     <p className="text-gray-600 text-sm">Login or Sign up to continue</p>
                 </div>
 
                 <div className="w-full max-w-md bg-white/80 backdrop-blur-md shadow-2xl rounded-xl p-6">
-
                     <div className="flex mb-4">
                         <button
                             className={`flex-1 p-2 font-bold rounded-l-lg ${mode === "login" ? "bg-blue-700 text-white" : "bg-gray-200 text-gray-700"}`}
-                            onClick={() => setMode("login")}
+                            onClick={() => {
+                                setMode("login");
+                                setStep(1);
+                            }}
                         >
                             Login
                         </button>
@@ -107,6 +141,7 @@ export default function AdminLogin() {
                             onClick={() => {
                                 setMode("signup");
                                 setRole("user");
+                                setStep(1);
                             }}
                         >
                             Signup
@@ -115,97 +150,168 @@ export default function AdminLogin() {
 
                     <Formik
                         initialValues={{
+                            name: "",
                             email: "",
                             password: "",
-                            username: "",
-                            vehicle: "",
+                            phone: "",
+                            gender: "",
+                            area: "",
+                            vehicle: {
+                                model: "",
+                                licenseNumber: "",
+                                color: "",
+                            },
                             role,
                         }}
                         enableReinitialize
-                        validationSchema={mode === "login" ? loginSchema : signupSchema}
-                        onSubmit={(values) =>
-                            mode === "login" ? handleLogin(values) : handleSignup(values)
+                        validationSchema={
+                            mode === "login"
+                                ? loginSchema
+                                : role === "driver" && step === 2
+                                    ? vehicleSchema
+                                    : signupSchemaStep1
                         }
+                        onSubmit={(values) => {
+                            if (mode === "login") {
+                                handleLogin(values);
+                            } else {
+                                if (role === "driver" && step === 1) {
+                                    setStep(2); // go to vehicle form
+                                } else {
+                                    handleSignup(values);
+                                }
+                            }
+                        }}
                     >
                         {({ values, setFieldValue }) => (
-                            <Form className="space-y-4">
-                                <div>
-                                    <label className="font-medium">Role</label>
-                                    <Field
-                                        as="select"
-                                        name="role"
-                                        className="w-full mt-1 p-2 border rounded"
-                                        onChange={(e) => {
-                                            setRole(e.target.value);
-                                            setFieldValue("role", e.target.value);
-                                        }}
-                                    >
-                                        <option value="user">User</option>
-                                        <option value="admin" disabled={mode === "signup"}>Admin</option>
-                                        <option value="driver">Driver</option>
-                                    </Field>
-                                </div>
+                            <Form className="space-y-4 overflow-y-auto  max-h-[400px]">
+                                {mode === "signup" && step === 1 && (
+                                    <>
+                                        <div>
+                                            <label className="font-medium">Role</label>
+                                            <Field
+                                                as="select"
+                                                name="role"
+                                                className="w-full mt-1 p-2 border rounded"
+                                                onChange={(e) => {
+                                                    setRole(e.target.value);
+                                                    setFieldValue("role", e.target.value);
+                                                    setStep(1); // reset step if role changes
+                                                }}
+                                            >
+                                                <option value="user">User</option>
+                                                <option value="admin" disabled>Admin</option>
+                                                <option value="driver">Driver</option>
+                                            </Field>
+                                        </div>
 
-                                {mode === "signup" && (
-                                    <div>
-                                        <label className="font-medium">Username</label>
-                                        <Field
-                                            type="text"
-                                            name="username"
-                                            className="w-full mt-1 p-2 border rounded"
-                                        />
-                                        <ErrorMessage name="username" component="div" className="text-red-500 text-sm" />
-                                    </div>
+                                        <div>
+                                            <label className="font-medium">name</label>
+                                            <Field type="text" name="name" className="w-full mt-1 p-2 border rounded" />
+                                            <ErrorMessage name="name" component="div" className="text-red-500 text-sm" />
+                                        </div>
+
+                                        <div>
+                                            <label className="font-medium">Email</label>
+                                            <Field type="email" name="email" className="w-full mt-1 p-2 border rounded" />
+                                            <ErrorMessage name="email" component="div" className="text-red-500 text-sm" />
+                                        </div>
+
+                                        <div>
+                                            <label className="font-medium">Password</label>
+                                            <Field type="password" name="password" className="w-full mt-1 p-2 border rounded" />
+                                            <ErrorMessage name="password" component="div" className="text-red-500 text-sm" />
+                                        </div>
+
+                                        <div>
+                                            <label className="font-medium">Phone</label>
+                                            <Field type="text" name="phone" className="w-full mt-1 p-2 border rounded" />
+                                            <ErrorMessage name="phone" component="div" className="text-red-500 text-sm" />
+                                        </div>
+
+                                        <div>
+                                            <label className="font-medium">Gender</label>
+                                            <Field as="select" name="gender" className="w-full mt-1 p-2 border rounded">
+                                                <option value="">Select</option>
+                                                <option value="male">Male</option>
+                                                <option value="female">Female</option>
+                                                <option value="other">Other</option>
+                                            </Field>
+                                            <ErrorMessage name="gender" component="div" className="text-red-500 text-sm" />
+                                        </div>
+
+                                        <div>
+                                            <label className="font-medium">Area</label>
+                                            <Field type="text" name="area" className="w-full mt-1 p-2 border rounded" />
+                                            <ErrorMessage name="area" component="div" className="text-red-500 text-sm" />
+                                        </div>
+                                    </>
                                 )}
 
-                                <div>
-                                    <label className="font-medium">Email</label>
-                                    <Field
-                                        type="email"
-                                        name="email"
-                                        className="w-full mt-1 p-2 border rounded"
-                                    />
-                                    <ErrorMessage name="email" component="div" className="text-red-500 text-sm" />
-                                </div>
+                                {mode === "signup" && role === "driver" && step === 2 && (
+                                    <>
+                                        <h2 className="font-bold text-lg text-blue-700">Vehicle Information</h2>
 
-                                <div>
-                                    <label className="font-medium">Password</label>
-                                    <Field
-                                        type="password"
-                                        name="password"
-                                        className="w-full mt-1 p-2 border rounded"
-                                    />
-                                    <ErrorMessage name="password" component="div" className="text-red-500 text-sm" />
-                                </div>
+                                        <div>
+                                            <label className="font-medium">Vehicle Model</label>
+                                            <Field type="text" name="vehicle.model" className="w-full mt-1 p-2 border rounded" />
+                                            <ErrorMessage name="vehicle.model" component="div" className="text-red-500 text-sm" />
+                                        </div>
 
-                                {mode === "signup" && values.role === "driver" && (
-                                    <div>
-                                        <label className="font-medium">Vehicle Type</label>
-                                        <Field
-                                            as="select"
-                                            name="vehicle"
-                                            className="w-full mt-1 p-2 border rounded"
-                                        >
-                                            <option value="">Select Vehicle</option>
-                                            <option value="Bus">Bus</option>
-                                            <option value="Car">Car</option>
-                                            <option value="Van">Van</option>
-                                        </Field>
-                                        <ErrorMessage name="vehicle" component="div" className="text-red-500 text-sm" />
-                                    </div>
+                                        <div>
+                                            <label className="font-medium">License Number</label>
+                                            <Field type="text" name="vehicle.licenseNumber" className="w-full mt-1 p-2 border rounded" />
+                                            <ErrorMessage name="vehicle.licenseNumber" component="div" className="text-red-500 text-sm" />
+                                        </div>
+
+                                        <div>
+                                            <label className="font-medium">Vehicle Color</label>
+                                            <Field type="text" name="vehicle.color" className="w-full mt-1 p-2 border rounded" />
+                                            <ErrorMessage name="vehicle.color" component="div" className="text-red-500 text-sm" />
+                                        </div>
+                                    </>
                                 )}
 
-                                <button
-                                    type="submit"
-                                    className="w-full p-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-all"
-                                >
-                                    {mode === "login" ? "Login" : "Signup"}
+                                {mode === "login" && (
+                                    <>
+                                        <div>
+                                            <label className="font-medium">Role</label>
+                                            <Field
+                                                as="select"
+                                                name="role"
+                                                className="w-full mt-1 p-2 border rounded"
+                                                onChange={(e) => {
+                                                    setRole(e.target.value);
+                                                    setFieldValue("role", e.target.value);
+                                                }}
+                                            >
+                                                <option value="user">User</option>
+                                                <option value="admin">Admin</option>
+                                                <option value="driver">Driver</option>
+                                            </Field>
+                                        </div>
+
+                                        <div>
+                                            <label className="font-medium">Email</label>
+                                            <Field type="email" name="email" className="w-full mt-1 p-2 border rounded" />
+                                            <ErrorMessage name="email" component="div" className="text-red-500 text-sm" />
+                                        </div>
+
+                                        <div>
+                                            <label className="font-medium">Password</label>
+                                            <Field type="password" name="password" className="w-full mt-1 p-2 border rounded" />
+                                            <ErrorMessage name="password" component="div" className="text-red-500 text-sm" />
+                                        </div>
+                                    </>
+                                )}
+
+                                <button type="submit" className="w-full p-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-all">
+                                    {mode === "login" ? "Login" : step === 2 ? "Submit" : "Next"}
                                 </button>
                             </Form>
                         )}
                     </Formik>
 
-                    {/* Dummy credentials */}
                     {mode === "login" && (
                         <div className="mt-6 text-sm text-gray-700">
                             <h4 className="font-semibold underline mb-2">Try these:</h4>
@@ -234,4 +340,3 @@ export default function AdminLogin() {
         </div>
     );
 }
-

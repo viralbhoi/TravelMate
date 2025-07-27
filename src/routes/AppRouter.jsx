@@ -1,14 +1,11 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { useLoginContext } from "../context/LoginContext.jsx";
 import Home from "../pages/Home.jsx";
 import Login from "../pages/Login.jsx"
-
 import UserHomePage from "../components/User/UserHomePage.jsx";
-
 import AdminHomePage from "../components/Admin/AdminHomePage.jsx";
-
 import DriverHomePage from "../components/Driver/DriverHomePage.jsx";
 
+import { useLoginContext } from "../context/LoginContext.jsx";
 
 export default function AppRouter() {
     const { loginStatus,userRole } = useLoginContext();

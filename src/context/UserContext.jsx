@@ -12,7 +12,7 @@ export const UserContextProvider = ({ children }) => {
     useEffect(() => {
         if (!userProfile) {
             
-            fetch("/api/user/profile", { credentials: "include" })
+            fetch("/api/user/profile", { headers: {"auth-token":localStorage.getItem("token")} })
                 .then((res) => res.ok ? res.json() : null)
                 .then((data) => {
                     if (data) {

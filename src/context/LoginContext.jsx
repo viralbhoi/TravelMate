@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect, use } from "react";
 import { getFromLS, saveToLS } from "../utils/localStorageUtils";
 
 
@@ -7,7 +7,7 @@ const loginContext = createContext();
 export const LoginContextProvider = ({ children }) => {
     const [loginStatus, setLoginStatus] = useState(getFromLS("loginStatus") || true);
     const [token, setToken] = useState(getFromLS("token") || null);
-    const [userRole, setUserRole] = useState(getFromLS("userRole") || "admin");
+    const [userRole, setUserRole] = useState(getFromLS("userRole") || null);
 
     useEffect(() => {
         saveToLS("loginStatus", loginStatus);
@@ -15,6 +15,9 @@ export const LoginContextProvider = ({ children }) => {
     useEffect(() => {
         saveToLS("token", token);
     }, [token]);
+    useEffect(() => {
+        saveToLS("userRole", userRole);
+    }, [userRole]);
 
     const login = (jwt) => {
         setLoginStatus(true);
