@@ -1,4 +1,4 @@
-// src/App.jsx
+
 import React from 'react';
 import AppRouter from './routes/AppRouter';
 import AdminHomePage from './components/Admin/AdminHomePage';

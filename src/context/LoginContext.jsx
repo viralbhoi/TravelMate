@@ -7,7 +7,7 @@ const loginContext = createContext();
 export const LoginContextProvider = ({ children }) => {
     const [loginStatus, setLoginStatus] = useState(getFromLS("loginStatus") || true);
     const [token, setToken] = useState(getFromLS("token") || null);
-    const [userRole, setUserRole] = useState(getFromLS("userRole") || null);
+    const [userRole, setUserRole] = useState(getFromLS("userRole") || "user");
 
     useEffect(() => {
         saveToLS("loginStatus", loginStatus);

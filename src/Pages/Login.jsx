@@ -62,17 +62,18 @@ export default function AdminLogin() {
             }
 
             
+            navigate(`/${role}/dashboard`);
             login(data?.token);
             setUserProfile(data?.user);
             setUserRole(role);
 
 
             notifySuccess("Login successful!");
-            navigate(`/${role}/dashboard`);
 
         } catch (err) {
-            notifyError("Something went wrong. Please try again.");
+            notifyError();
             console.error(err);
+
         }
     };
 
